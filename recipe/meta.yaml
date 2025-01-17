@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/autobot-ml-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/autobot-ml-{{ version }}.tar.gz
   sha256: 95c87ab3822d5f2459f27bf51c3a0210fc523d5324600f686153940acb787b18
 
 build:
@@ -14,15 +14,15 @@ build:
     - autobot = autobot.main:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8,<3.11
+    - python {{ python_min }}
     - pip
     - poetry-core >=1.0.0
   run:
-    - python >=3.8,<3.11
+    - python >={{ python_min }},<3.11
     - colorama >=0.4.5,<0.5.0
     - openai >=0.23.0,<0.24.0
     - python-dotenv >=0.21.0,<0.22.0
@@ -36,6 +36,7 @@ test:
     - autobot --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/charliermarsh/autobot
